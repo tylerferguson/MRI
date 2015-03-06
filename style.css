@@ -1,0 +1,42 @@
+* {
+    box-sizing: border-box;
+}
+
+.room-grid {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    flex-wrap: wrap;
+}
+.room {
+    display:flex;
+    flex-direction: column;
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    min-width: 50%;
+    flex-grow: 1;
+    background-color: rgba(0, 176, 30, 0.76);
+    color: white;
+    font-family: 'Roboto';
+    font-weight: 300;
+    font-size: 20px;
+    border: black solid 1px;
+}
+
+.busy {
+    background-color: red;
+}
+.status {
+    font-size: 80px;
+    padding: 50px;
+}
+
+.subject {
+    font-weight: 400;
+    padding-left: 60px;
+}
+
+.meeting-room-name{
+    font-size: 30px;
+    padding: 10px;
+}
