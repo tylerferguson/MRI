@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title></title>
     <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.css" rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="style.css"/>
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
@@ -16,10 +17,16 @@
 <body>
 
     <div class="room-grid" ng-controller="RoomCtrl">
-        <div class="room" ng-repeat="room in meetingRooms" ng-class="{'busy': room.status === 'Busy'}">
-            <span class="meeting-room-name">{{room.name}}</span>
-            <span class="status">{{room.status}}</span>
-            <span class="subject">{{room.subject}}</span>
+        <div class="room" ng-repeat="room in meetingRooms">
+            <span class="meeting-room-name">
+                {{room.name}}
+                <span class="subject">{{room.subject}}</span>
+            </span>
+            <span class="status">
+                {{room.statusMessage}}
+                <i class="fa fa-ban busy" ng-show="room.status === 'Busy'"></i>
+                <i class="fa fa-check-circle-o free" ng-hide="room.status === 'Busy'"></i>
+            </span>
         </div>
     </div>
 

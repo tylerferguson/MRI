@@ -14,8 +14,9 @@
     /*justify-content: center;*/
     /*align-items: center;*/
     min-width: 50%;
+    max-width: 50%;
     flex-grow: 1;
-    background-color: rgba(0, 176, 30, 0.76);
+    background-color: rgba(1, 87, 211, 0.75);
     color: white;
     font-family: 'Roboto';
     font-weight: 300;
@@ -23,12 +24,26 @@
     border: black solid 1px;
 }
 
+.free {
+    padding-top: 30px;
+    color: green;
+    font-size: 120px;
+    align-self: center;
+}
+
 .busy {
-    background-color: red;
+    padding-top: 30px;
+
+    color: red;
+    font-size: 100px;
+    align-self: center;
 }
 .status {
     font-size: 80px;
     padding: 50px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .subject {

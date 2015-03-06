@@ -13,6 +13,7 @@
                 name: "Meeting Room 1",
                 organizer: null,
                 status: null,
+                statusMessage: null,
                 subject: null
             },
             {
@@ -20,6 +21,7 @@
                 name: "Meeting Room 2",
                 organizer: null,
                 status: null,
+                statusMessage: null,
                 subject: null
 
             },
@@ -28,6 +30,7 @@
                 name: "Meeting Room 3",
                 organizer: null,
                 status: null,
+                statusMessage: null,
                 subject: null
 
             },
@@ -36,35 +39,50 @@
                 name: "Meeting Room 4",
                 organizer: null,
                 status: null,
+                statusMessage: null,
                 subject: null
             }
         ];
 
         function updateMeetings() {
-            function getMeeting(room) {
-
+            function getStatus(room) {
                 var now = moment();
                 var start = now.toISOString();
                 var end = now.endOf('day');
-                $http.get("/office365/users/" + room.email + "@scottlogic.co.uk/calendarview?startdatetime=" + start + "&enddatetime=" + end.toISOString() + "&$orderby=Start&$top=1&$filter=IsCancelled eq false")
+                $http.get("/office365/users/" + room.email + "@scottlogic.co.uk/calendarview?startdatetime=" + start + "&enddatetime=" + end.toISOString() + "&$orderby=Start&$filter=IsCancelled eq false")
                     .success(function(data) {
-                        console.log(data.value[0]);
+                        var meetings = data.value;
 
-                        if ( data.value[0] && moment(data.value[0].Start).isBefore(moment(start))) {
-                            room.organizer = data.value[0].Organizer.EmailAddress.Name;
-                            room.status = 'Busy';
-                            room.subject = data.value[0].Subject;
+                        function getNextAvailableSlot() {
+                            console.log(meetings);
+                            var nextSlot = meetings[0].End;
+                            var i = 0, j = 1;
+                            while (meetings[j] && j < meetings.length) {
+                                if (moment(meetings[i].End).isBefore(moment(meetings[j].Start), 'minute')) {
+                                    nextSlot =  meetings[i].End;
+                                }
+                            }
+                            return moment(nextSlot);
                         }
-                        else if (data.value[0]) {
-                            room.status = data.value[0] ? 'Free until ' + moment(data.value[0].Start).format("h:mma") : 'Free all day';
+
+                        if ( meetings[0] && moment(meetings[0].Start).isBefore(moment(start))) {
+                            room.organizer = meetings[0].Organizer.EmailAddress.Name;
+                            room.status = 'Busy';
+                            room.statusMessage = 'Busy until ' + getNextAvailableSlot().format("h:mma");
+                            room.subject = meetings[0].Subject;
+                        }
+                        else if (meetings[0]) {
+                            room.statusMessage = meetings[0] ? 'Free until ' + moment(meetings[0].Start).format("h:mma") : 'Free all day';
+                            room.status = null;
                         } else {
                             room.organizer = null;
-                            room.status = 'Free all day';
+                            room.statusMessage = 'Free all day';
+                            room.status = null;
                         }
                     });
             }
             $scope.meetingRooms.forEach(function(room) {
-                getMeeting(room);
+                getStatus(room);
             });
         }
 
