@@ -16,10 +16,10 @@
 <body>
 
     <div class="room-grid" ng-controller="RoomCtrl">
-        <div class="room" ng-repeat="room in meetingRooms" ng-class="{'busy': room.Status === 'Busy'}">
+        <div class="room" ng-repeat="room in meetingRooms" ng-class="{'busy': room.status === 'Busy'}">
             <span class="meeting-room-name">{{room.name}}</span>
-            <span class="status">{{room.Status}}</span>
-            <span class="subject">{{room.Subject}}</span>
+            <span class="status">{{room.status}}</span>
+            <span class="subject">{{room.subject}}</span>
         </div>
     </div>
 

@@ -11,32 +11,32 @@
             {
                 email: "room-bri-1-meet",
                 name: "Meeting Room 1",
-                Organizer: null,
-                Status: null,
-                Subject: null
+                organizer: null,
+                status: null,
+                subject: null
             },
             {
                 email: "room-bri-2-meet",
                 name: "Meeting Room 2",
-                Organizer: null,
-                Status: null,
-                Subject: null
+                organizer: null,
+                status: null,
+                subject: null
 
             },
             {
                 email: "room-bri-3-meet",
                 name: "Meeting Room 3",
-                Organizer: null,
-                Status: null,
-                Subject: null
+                organizer: null,
+                status: null,
+                subject: null
 
             },
             {
                 email: "room-bri-4-meet",
                 name: "Meeting Room 4",
-                Organizer: null,
-                Status: null,
-                Subject: null
+                organizer: null,
+                status: null,
+                subject: null
             }
         ];
 
@@ -51,15 +51,15 @@
                         console.log(data.value[0]);
 
                         if ( data.value[0] && moment(data.value[0].Start).isBefore(moment(start))) {
-                            room.Organizer = data.value[0].Organizer.EmailAddress.Name;
-                            room.Status = 'Busy';
-                            room.Subject = data.value[0].Subject;
+                            room.organizer = data.value[0].Organizer.EmailAddress.Name;
+                            room.status = 'Busy';
+                            room.subject = data.value[0].Subject;
                         }
                         else if (data.value[0]) {
-                            room.Status = data.value[0] ? 'Free until ' + moment(data.value[0].Start).format("h:mma") : 'Free all day';
+                            room.status = data.value[0] ? 'Free until ' + moment(data.value[0].Start).format("h:mma") : 'Free all day';
                         } else {
-                            room.Organizer = null;
-                            room.Status = 'Free all day';
+                            room.organizer = null;
+                            room.status = 'Free all day';
                         }
                     });
             }
