@@ -45,7 +45,7 @@
         ];
 
         function getTimeNow() {
-            $scope.timeNow = moment().format("h:mma");
+            $scope.timeNow = moment().format("HH:mm");
         }
 
         function updateMeetings() {
@@ -75,11 +75,11 @@
                         if ( meetings[0] && moment(meetings[0].Start).isBefore(moment(start))) {
                             room.organizer = meetings[0].Organizer.EmailAddress.Name;
                             room.status = 'Busy';
-                            room.statusMessage = 'Busy until ' + getNextAvailableSlot().format("h:mma");
+                            room.statusMessage = 'Busy until ' + getNextAvailableSlot().format("HH:mm");
                             room.subject = meetings[0].Subject;
                         }
                         else if (meetings[0]) {
-                            room.statusMessage = 'Free until ' + moment(meetings[0].Start).format("h:mma");
+                            room.statusMessage = 'Free until ' + moment(meetings[0].Start).format("HH:mm");
                             room.status = null;
                             room.subject = null;
                             room.organizer = meetings[0].Subject;
