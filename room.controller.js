@@ -44,6 +44,10 @@
             }
         ];
 
+        function getTimeNow() {
+            $scope.timeNow = moment().format("h:mma");
+        }
+
         function updateMeetings() {
             function getStatus(room) {
                 var now = moment();
@@ -89,7 +93,12 @@
             });
         }
 
+        getTimeNow();
         updateMeetings();
-        window.setInterval(updateMeetings, 10000);
+        window.setInterval(function() {
+                updateMeetings();
+                getTimeNow();
+            }, 10000
+        );
     }]);
 })();

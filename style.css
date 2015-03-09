@@ -5,6 +5,14 @@
 .center-display {
     flex-grow: 1;
     min-width: 40%;
+    display: flex;
+    justify-content: center;
+}
+
+#time-display {
+    font-size: 100px;
+    font-family: Roboto;
+    font-weight: 300;
 }
 
 .room-grid {
