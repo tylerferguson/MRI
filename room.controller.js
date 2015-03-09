@@ -79,10 +79,10 @@
                             room.subject = meetings[0].Subject;
                         }
                         else if (meetings[0]) {
-                            room.statusMessage = meetings[0] ? 'Free until ' + moment(meetings[0].Start).format("h:mma") : 'Free all day';
+                            room.statusMessage = 'Free until ' + moment(meetings[0].Start).format("h:mma");
                             room.status = null;
                             room.subject = null;
-                            room.organizer = null;
+                            room.organizer = meetings[0].Subject;
                         } else {
                             room.organizer = null;
                             room.statusMessage = 'Free all day';
