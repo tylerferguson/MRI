@@ -57,10 +57,13 @@
                             console.log(meetings);
                             var nextSlot = meetings[0].End;
                             var i = 0, j = 1;
-                            while (meetings[j] && j < meetings.length) {
+                            while (j < meetings.length && meetings[j]) {
                                 if (moment(meetings[i].End).isBefore(moment(meetings[j].Start), 'minute')) {
-                                    nextSlot =  meetings[i].End;
+                                    return moment(meetings[i].End);
                                 }
+                                nextSlot = meetings[j].End;
+                                i++;
+                                j++;
                             }
                             return moment(nextSlot);
                         }
