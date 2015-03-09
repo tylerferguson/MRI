@@ -67,7 +67,8 @@
     /*min-width: 50%;*/
     /*max-width: 50%;*/
     flex-grow: 1;
-    background-color: rgba(1, 87, 211, 0.75);
+    background-color: rgb(1, 84, 225);
+    opacity: 0.8;
     color: white;
     font-family: 'Roboto';
     font-weight: 300;
@@ -82,6 +83,11 @@
     align-self: center;
 }
 
+.busy-room {
+    background-color: #c60000;
+    opacity: .7;
+}
+
 .busy {
     padding-top: 30px;
 
@@ -90,7 +96,7 @@
     align-self: center;
 }
 .status {
-    font-size: 80px;
+    font-size: 50px;
     padding: 50px;
     align-self: center;
     display: flex;

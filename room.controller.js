@@ -81,10 +81,14 @@
                         else if (meetings[0]) {
                             room.statusMessage = meetings[0] ? 'Free until ' + moment(meetings[0].Start).format("h:mma") : 'Free all day';
                             room.status = null;
+                            room.subject = null;
+                            room.organizer = null;
                         } else {
                             room.organizer = null;
                             room.statusMessage = 'Free all day';
                             room.status = null;
+                            room.subject = null;
+
                         }
                     });
             }
