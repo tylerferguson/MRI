@@ -16,6 +16,12 @@
     font-weight: 100;
 }
 
+#lobby-layout {
+    width: 50%;
+    height: auto;
+    opacity: 0.3;
+}
+
 .room-grid {
     top: 0;
     bottom: 0;
