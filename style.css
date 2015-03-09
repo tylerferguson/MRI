@@ -34,6 +34,7 @@
 
 .room-grid-bottom {
     display:flex;
+    flex-direction: row-reverse;
     padding-left: 40px;
     padding-right: 40px;
     padding-top: 20px;
