@@ -40,11 +40,12 @@
             <div class="room" ng-class="{'busy-room': meetingRooms[1].status === 'Busy'}">
                 <span class="meeting-room-name">
                     {{meetingRooms[1].name}}
-                    <span class="subject">{{meetingRooms[1].subject}}</span>
                 </span>
                 <span class="status">
+                    <span class="subject">{{meetingRooms[1].organizer}}</span>
                     {{meetingRooms[1].statusMessage}}
                     <i class="fa fa-check free" ng-hide="meetingRooms[1].status === 'Busy'"></i>
+                    <i class="fa fa-ban busy" ng-show="meetingRooms[1].status === 'Busy'"></i>
                 </span>
             </div>
         </div>
@@ -53,11 +54,12 @@
             <div class="room" ng-repeat="room in meetingRooms" ng-class="{'busy-room': room.status === 'Busy'}" ng-if="$index === 2 || $index === 3">
                 <span class="meeting-room-name">
                     {{room.name}}
-                    <span class="subject">{{room.subject}}</span>
                 </span>
                 <span class="status">
+                    <span class="subject">{{room.organizer}}</span>
                     {{room.statusMessage}}
                     <i class="fa fa-check free" ng-hide="room.status === 'Busy'"></i>
+                    <i class="fa fa-ban busy" ng-show="room.status === 'Busy'"></i>
                 </span>
             </div>
         </div>
