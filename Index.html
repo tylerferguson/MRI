@@ -15,12 +15,15 @@
     <script src="room.controller.js"></script>
 </head>
 <body ng-controller="RoomCtrl">
-    <div ng-if="!meetingRooms">
-        You haven't any email addresses!
-        <button ng-click="getEmailAddresses()">Click here to fix this!</button>
+    <div class="log-in" ng-if="!emailAddressesSubmitted()">
+        <p>Enter the Email addresses of the rooms below and press enter:</p>
+        <form ng-submit="submitEmailAddresses()">
+            <input type="text" ng-repeat="room in meetingRooms" ng-model="room.email">
+            <input ng-hide="true" type="submit" value="Submit"/>
+        </form>
     </div>
 
-    <div ng-if="meetingRooms" class="meeting-rooms">
+    <div ng-if="emailAddressesSubmitted()" class="meeting-rooms">
         <div class="center-display">
             <span id="time-display">
                 {{timeNow}}

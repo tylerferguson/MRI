@@ -6,53 +6,75 @@
     angular.module('MeetingRoomInterface').controller('RoomCtrl', ['$scope', '$http', function($scope, $http) {
 
         var self = this;
+        var loadedFromLocalStorage = localStorage.length === 4;
 
-        $scope.getEmailAddresses = function(){
-            $scope.meetingRooms = [
-                {
-                    email: "room-bri-1-meet@scottlogic.co.uk",
-                    name: "Meeting Room 1",
-                    organizer: null,
-                    status: null,
-                    statusMessage: null,
-                    subject: null
-                },
-                {
-                    email: "room-bri-2-meet@scottlogic.co.uk",
-                    name: "Meeting Room 2",
-                    organizer: null,
-                    status: null,
-                    statusMessage: null,
-                    subject: null
+        $scope.emailAddressesSubmitted = function() {
+            return localStorage.length === 4;
+        };
 
-                },
-                {
-                    email: "room-bri-3-meet@scottlogic.co.uk",
-                    name: "Meeting Room 3",
-                    organizer: null,
-                    status: null,
-                    statusMessage: null,
-                    subject: null
+        $scope.meetingRooms = [
+            {
+                email: null,
+                name: "Meeting Room 1",
+                organizer: null,
+                status: null,
+                statusMessage: null,
+                subject: null
+            },
+            {
+                email: null,
+                name: "Meeting Room 2",
+                organizer: null,
+                status: null,
+                statusMessage: null,
+                subject: null
 
-                },
-                {
-                    email: "room-bri-4-meet@scottlogic.co.uk",
-                    name: "Meeting Room 4",
-                    organizer: null,
-                    status: null,
-                    statusMessage: null,
-                    subject: null
-                }
-            ];
+            },
+            {
+                email: null,
+                name: "Meeting Room 3",
+                organizer: null,
+                status: null,
+                statusMessage: null,
+                subject: null
 
+            },
+            {
+                email: null,
+                name: "Meeting Room 4",
+                organizer: null,
+                status: null,
+                statusMessage: null,
+                subject: null
+            }
+        ];
+
+        $scope.submitEmailAddresses = function(){
+            $scope.meetingRooms.forEach(function(room, index) {
+                localStorage["room" + (index + 1) + "Email"] = room.email;
+            });
+        };
+
+        $scope.$watch('emailAddressesSubmitted()', function(value) {
+            if (!value) {
+                return;
+            }
+            if (loadedFromLocalStorage) {
+                $scope.meetingRooms.forEach(function(room, index) {
+                    room.email = localStorage["room" + (index + 1) + "Email"];
+                });
+            }
+            loadApp();
+        });
+
+        function loadApp() {
             getTimeNow();
             updateMeetings();
             window.setInterval(function() {
-                    updateMeetings();
-                    getTimeNow();
-                }, 10000
-            );
-        };
+                updateMeetings();
+                getTimeNow();
+            }, 10000);
+        }
 
         function getTimeNow() {
             $scope.timeNow = moment().format("HH:mm");

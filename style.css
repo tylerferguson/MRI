@@ -2,6 +2,22 @@
     box-sizing: border-box;
 }
 
+.log-in {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.log-in > form{
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 30%
+}
+
+input {
+    margin: 15px;
+}
+
 .center-display {
     position: absolute;
     left: 30%;
