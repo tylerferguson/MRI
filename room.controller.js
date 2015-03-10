@@ -7,42 +7,52 @@
 
         var self = this;
 
-        $scope.meetingRooms = [
-            {
-                email: "room-bri-1-meet",
-                name: "Meeting Room 1",
-                organizer: null,
-                status: null,
-                statusMessage: null,
-                subject: null
-            },
-            {
-                email: "room-bri-2-meet",
-                name: "Meeting Room 2",
-                organizer: null,
-                status: null,
-                statusMessage: null,
-                subject: null
+        $scope.getEmailAddresses = function(){
+            $scope.meetingRooms = [
+                {
+                    email: "room-bri-1-meet@scottlogic.co.uk",
+                    name: "Meeting Room 1",
+                    organizer: null,
+                    status: null,
+                    statusMessage: null,
+                    subject: null
+                },
+                {
+                    email: "room-bri-2-meet@scottlogic.co.uk",
+                    name: "Meeting Room 2",
+                    organizer: null,
+                    status: null,
+                    statusMessage: null,
+                    subject: null
 
-            },
-            {
-                email: "room-bri-3-meet",
-                name: "Meeting Room 3",
-                organizer: null,
-                status: null,
-                statusMessage: null,
-                subject: null
+                },
+                {
+                    email: "room-bri-3-meet@scottlogic.co.uk",
+                    name: "Meeting Room 3",
+                    organizer: null,
+                    status: null,
+                    statusMessage: null,
+                    subject: null
 
-            },
-            {
-                email: "room-bri-4-meet",
-                name: "Meeting Room 4",
-                organizer: null,
-                status: null,
-                statusMessage: null,
-                subject: null
-            }
-        ];
+                },
+                {
+                    email: "room-bri-4-meet@scottlogic.co.uk",
+                    name: "Meeting Room 4",
+                    organizer: null,
+                    status: null,
+                    statusMessage: null,
+                    subject: null
+                }
+            ];
+
+            getTimeNow();
+            updateMeetings();
+            window.setInterval(function() {
+                    updateMeetings();
+                    getTimeNow();
+                }, 10000
+            );
+        };
 
         function getTimeNow() {
             $scope.timeNow = moment().format("HH:mm");
@@ -53,7 +63,7 @@
                 var now = moment();
                 var start = now.toISOString();
                 var end = now.endOf('day');
-                $http.get("/office365/users/" + room.email + "@scottlogic.co.uk/calendarview?startdatetime=" + start + "&enddatetime=" + end.toISOString() + "&$orderby=Start&$filter=IsCancelled eq false")
+                $http.get("/office365/users/" + room.email + "/calendarview?startdatetime=" + start + "&enddatetime=" + end.toISOString() + "&$orderby=Start&$filter=IsCancelled eq false")
                     .success(function(data) {
                         var meetings = data.value;
 
@@ -82,7 +92,7 @@
                             room.statusMessage = 'Free until ' + moment(meetings[0].Start).format("HH:mm");
                             room.status = null;
                             room.subject = null;
-                            room.organizer = meetings[0].Subject;
+                            room.organizer = meetings[0].Organizer.EmailAddress.Name;
                         } else {
                             room.organizer = null;
                             room.statusMessage = 'Free all day';
@@ -96,13 +106,5 @@
                 getStatus(room);
             });
         }
-
-        getTimeNow();
-        updateMeetings();
-        window.setInterval(function() {
-                updateMeetings();
-                getTimeNow();
-            }, 10000
-        );
     }]);
 })();
