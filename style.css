@@ -3,8 +3,11 @@
 }
 
 .center-display {
-    flex-grow: 1;
-    min-width: 40%;
+    position: absolute;
+    left: 30%;
+    right: 30%;
+    top: 0;
+    bottom: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,39 +25,10 @@
     opacity: 0.3;
 }
 
-.room-grid {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-}
-
-.room-grid-top {
-    display: flex;
-    flex-grow: 1;
-    max-height: 50%;
-}
-
-.room-grid-bottom {
-    display:flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    flex-grow: 1;
-}
-
-.room-grid-top > .room {
-    width: 30%;
-}
-
 .room {
+    position: absolute;
     display:flex;
     flex-direction: column;
-    flex-grow: 1;
     background-color: rgb(1, 84, 225);
     opacity: 0.8;
     color: white;
@@ -95,7 +69,42 @@
     align-self: center;
 }
 
-.meeting-room-name{
+.meeting-room-name {
     font-size: 30px;
     padding: 10px;
+}
+
+.meeting-room-1 {
+    left: 0;
+    top: 0;
+    right: 70%;
+    bottom: 50%;
+}
+
+.meeting-room-2 {
+    right: 0;
+    top: 0;
+    left: 70%;
+    bottom: 50%;
+}
+
+.meeting-room-3 {
+    right: 0;
+    bottom: 0;
+    left: 50%;
+    top: 50%;
+}
+
+.meeting-room-4 {
+    left: 0;
+    bottom: 0;
+    right: 50%;
+    top: 50%;
+}
+
+.meeting-rooms {
+    position: relative;
+    width: calc(100vw - 40px);
+    height: calc(100vh - 40px);
+    margin: 20px;
 }
