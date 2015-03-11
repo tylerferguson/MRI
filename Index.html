@@ -36,7 +36,7 @@
             </span>
             <span class="status">
                 <span class="error-message">{{room.errorMessage}}</span>
-                <span class="subject">{{room.organizer}}</span>
+                <span class="subject" ng-show="room.booked">Booked by <span>{{room.organizer}}</span></span>
                 {{room.statusMessage}}
                 <i class="fa fa-check icon" ng-show="room.status === 'Free'"></i>
                 <i class="fa fa-ban icon" ng-show="room.status === 'Busy'"></i>

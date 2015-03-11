@@ -22,7 +22,8 @@
                 statusMessage: null,
                 subject: null,
                 errorCount: 0,
-                errorMessage: null
+                errorMessage: null,
+                booked: false
             },
             {
                 email: null,
@@ -32,7 +33,8 @@
                 statusMessage: null,
                 subject: null,
                 errorCount: 0,
-                errorMessage: null
+                errorMessage: null,
+                booked: false
             },
             {
                 email: null,
@@ -42,7 +44,8 @@
                 statusMessage: null,
                 subject: null,
                 errorCount: 0,
-                errorMessage: null
+                errorMessage: null,
+                booked: false
             },
             {
                 email: null,
@@ -52,7 +55,8 @@
                 statusMessage: null,
                 subject: null,
                 errorCount: 0,
-                errorMessage: null
+                errorMessage: null,
+                booked: false
             }
         ];
 
@@ -119,17 +123,21 @@
                             room.status = 'Busy';
                             room.statusMessage = 'Busy until ' + getNextAvailableSlot().format("HH:mm");
                             room.errorMessage = null;
+                            room.booked = true;
                         }
                         else if (meetings[0]) {
                             room.statusMessage = 'Free until ' + moment(meetings[0].Start).format("HH:mm");
                             room.status = 'Free';
                             room.organizer = meetings[0].Organizer.EmailAddress.Name;
                             room.errorMessage = null;
+                            room.booked = true;
                         } else {
                             room.organizer = null;
                             room.statusMessage = 'Free all day';
                             room.status = 'Free';
                             room.errorMessage = null;
+                            room.booked = false;
+
                         }
                         function getNextAvailableSlot() {
                             var nextSlot = meetings[0].End;
@@ -151,14 +159,16 @@
                             return;
                         }
                         room.errorCount++;
-                        if(room.errorCount === 5) {
-                            firstErrorTime = moment().format("HH:mm");
+                        if(room.errorCount === 1) {
+                            firstErrorTime = moment();
                         }
-                        if (room.errorCount > 5) {
-                            room.errorMessage = "There's been a problem. Updates should be back soon. Last update: " + firstErrorTime;
+                        if (room.errorCount > 1) {
+                            room.errorMessage = "There's been a problem. Updates should be back soon. Last updated " + firstErrorTime.from(moment());
                             room.organizer = null;
                             room.statusMessage = null;
                             room.status = null;
+                            room.booked = false;
+
                         }
                     });
             }
