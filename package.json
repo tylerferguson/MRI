@@ -1,0 +1,8 @@
+{
+  "name": "MeetingRoomInterface",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.12.2",
+    "express-http-proxy": "^0.3.1"
+  }
+}
