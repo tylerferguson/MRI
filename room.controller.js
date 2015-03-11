@@ -6,10 +6,11 @@
     angular.module('MeetingRoomInterface').controller('RoomCtrl', ['$scope', '$http', function($scope, $http) {
 
         var self = this;
-        var loadedFromLocalStorage = localStorage.length === 4;
+        var loadedFromLocalStorage = localStorage.length > 0;
+        var firstErrorTime;
 
         $scope.emailAddressesSubmitted = function() {
-            return localStorage.length === 4;
+            return localStorage.length > 0;
         };
 
         $scope.meetingRooms = [
@@ -19,7 +20,9 @@
                 organizer: null,
                 status: null,
                 statusMessage: null,
-                subject: null
+                subject: null,
+                errorCount: 0,
+                errorMessage: null
             },
             {
                 email: null,
@@ -27,8 +30,9 @@
                 organizer: null,
                 status: null,
                 statusMessage: null,
-                subject: null
-
+                subject: null,
+                errorCount: 0,
+                errorMessage: null
             },
             {
                 email: null,
@@ -36,8 +40,9 @@
                 organizer: null,
                 status: null,
                 statusMessage: null,
-                subject: null
-
+                subject: null,
+                errorCount: 0,
+                errorMessage: null
             },
             {
                 email: null,
@@ -45,13 +50,17 @@
                 organizer: null,
                 status: null,
                 statusMessage: null,
-                subject: null
+                subject: null,
+                errorCount: 0,
+                errorMessage: null
             }
         ];
 
         $scope.submitEmailAddresses = function(){
             $scope.meetingRooms.forEach(function(room, index) {
-                localStorage["room" + (index + 1) + "Email"] = room.email;
+                if (room.email !== null) {
+                    localStorage["room" + (index + 1) + "Email"] = room.email;
+                }
             });
         };
 
@@ -81,16 +90,34 @@
         }
 
         function updateMeetings() {
+            $scope.meetingRooms.forEach(function(room) {
+                getStatus(room);
+            });
+
             function getStatus(room) {
                 var now = moment();
                 var start = now.toISOString();
                 var end = now.endOf('day');
                 $http.get("/office365/users/" + room.email + "/calendarview?startdatetime=" + start + "&enddatetime=" + end.toISOString() + "&$orderby=Start&$filter=IsCancelled eq false")
-                    .success(function(data) {
-                        var meetings = data.value;
+                    .then(function(response) {
+                        var meetings = response.data.value;
+                        room.errorCount = 0;
 
+                        if ( meetings[0] && moment(meetings[0].Start).isBefore(moment(start))) {
+                            room.organizer = meetings[0].Organizer.EmailAddress.Name;
+                            room.status = 'Busy';
+                            room.statusMessage = 'Busy until ' + getNextAvailableSlot().format("HH:mm");
+                        }
+                        else if (meetings[0]) {
+                            room.statusMessage = 'Free until ' + moment(meetings[0].Start).format("HH:mm");
+                            room.status = null;
+                            room.organizer = meetings[0].Organizer.EmailAddress.Name;
+                        } else {
+                            room.organizer = null;
+                            room.statusMessage = 'Free all day';
+                            room.status = null;
+                        }
                         function getNextAvailableSlot() {
-                            console.log(meetings);
                             var nextSlot = meetings[0].End;
                             var i = 0, j = 1;
                             while (j < meetings.length && meetings[j]) {
@@ -103,30 +130,24 @@
                             }
                             return moment(nextSlot);
                         }
-
-                        if ( meetings[0] && moment(meetings[0].Start).isBefore(moment(start))) {
-                            room.organizer = meetings[0].Organizer.EmailAddress.Name;
-                            room.status = 'Busy';
-                            room.statusMessage = 'Busy until ' + getNextAvailableSlot().format("HH:mm");
-                            room.subject = meetings[0].Subject;
+                    },
+                    function(error) {
+                        if (room.email === null || !room.email) {
+                            room.errorMessage = "You have not supplied an Email address for this room.";
+                            return;
                         }
-                        else if (meetings[0]) {
-                            room.statusMessage = 'Free until ' + moment(meetings[0].Start).format("HH:mm");
-                            room.status = null;
-                            room.subject = null;
-                            room.organizer = meetings[0].Organizer.EmailAddress.Name;
-                        } else {
+                        room.errorCount++;
+                        if(room.errorCount === 5) {
+                            firstErrorTime = moment().format("HH:mm");
+                        }
+                        if (room.errorCount > 5) {
+                            room.errorMessage = "There's been a problem. Updates should be back soon. Last update: " + firstErrorTime;
                             room.organizer = null;
-                            room.statusMessage = 'Free all day';
+                            room.statusMessage = null;
                             room.status = null;
-                            room.subject = null;
-
                         }
                     });
             }
-            $scope.meetingRooms.forEach(function(room) {
-                getStatus(room);
-            });
         }
     }]);
 })();

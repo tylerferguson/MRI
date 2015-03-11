@@ -35,9 +35,10 @@
                 {{room.name}}
             </span>
             <span class="status">
+                <span class="error-message">{{room.errorMessage}}</span>
                 <span class="subject">{{room.organizer}}</span>
                 {{room.statusMessage}}
-                <i class="fa fa-check free" ng-hide="room.status === 'Busy'"></i>
+                <i class="fa fa-check free" ng-hide="room.status === 'Busy' || room.status === null"></i>
                 <i class="fa fa-ban busy" ng-show="room.status === 'Busy'"></i>
             </span>
         </div>
