@@ -16,7 +16,7 @@
         $scope.meetingRooms = [
             {
                 email: null,
-                name: "Meeting Room 1",
+                name: "1",
                 organizer: null,
                 status: null,
                 statusMessage: null,
@@ -26,7 +26,7 @@
             },
             {
                 email: null,
-                name: "Meeting Room 2",
+                name: "2",
                 organizer: null,
                 status: null,
                 statusMessage: null,
@@ -36,7 +36,7 @@
             },
             {
                 email: null,
-                name: "Meeting Room 3",
+                name: "3",
                 organizer: null,
                 status: null,
                 statusMessage: null,
@@ -46,7 +46,7 @@
             },
             {
                 email: null,
-                name: "Meeting Room 4",
+                name: "4",
                 organizer: null,
                 status: null,
                 statusMessage: null,
@@ -62,6 +62,17 @@
                     localStorage["room" + (index + 1) + "Email"] = room.email;
                 }
             });
+        };
+
+        $scope.setStatusClass = function(status, index) {
+            var className = '';
+            if (status === 'Busy') {
+                className = 'busy-room ';
+            } else if(status === 'Free') {
+                className = 'free-room ';
+            }
+
+            return className + 'meeting-room-' + (index + 1);
         };
 
         $scope.$watch('emailAddressesSubmitted()', function(value) {
@@ -107,15 +118,18 @@
                             room.organizer = meetings[0].Organizer.EmailAddress.Name;
                             room.status = 'Busy';
                             room.statusMessage = 'Busy until ' + getNextAvailableSlot().format("HH:mm");
+                            room.errorMessage = null;
                         }
                         else if (meetings[0]) {
                             room.statusMessage = 'Free until ' + moment(meetings[0].Start).format("HH:mm");
-                            room.status = null;
+                            room.status = 'Free';
                             room.organizer = meetings[0].Organizer.EmailAddress.Name;
+                            room.errorMessage = null;
                         } else {
                             room.organizer = null;
                             room.statusMessage = 'Free all day';
-                            room.status = null;
+                            room.status = 'Free';
+                            room.errorMessage = null;
                         }
                         function getNextAvailableSlot() {
                             var nextSlot = meetings[0].End;

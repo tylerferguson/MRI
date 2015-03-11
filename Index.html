@@ -30,7 +30,7 @@
             </span>
             <img id="lobby-layout" src="lobby.png"/>
         </div>
-        <div class="room" ng-repeat="room in meetingRooms" ng-class="(room.status === 'Busy' ? 'busy-room ' : '') + 'meeting-room-' + ($index + 1)">
+        <div class="room" ng-repeat="room in meetingRooms" ng-class="setStatusClass(room.status, $index)">
             <span class="meeting-room-name">
                 {{room.name}}
             </span>
@@ -38,8 +38,9 @@
                 <span class="error-message">{{room.errorMessage}}</span>
                 <span class="subject">{{room.organizer}}</span>
                 {{room.statusMessage}}
-                <i class="fa fa-check free" ng-hide="room.status === 'Busy' || room.status === null"></i>
-                <i class="fa fa-ban busy" ng-show="room.status === 'Busy'"></i>
+                <i class="fa fa-check icon" ng-show="room.status === 'Free'"></i>
+                <i class="fa fa-ban icon" ng-show="room.status === 'Busy'"></i>
+                <i class="fa fa-question icon" ng-show="room.status === null"></i>
             </span>
         </div>
     </div>

@@ -45,7 +45,7 @@ input {
     position: absolute;
     display:flex;
     flex-direction: column;
-    background-color: rgb(1, 84, 225);
+    background-color: rgba(135, 135, 135, 0.76);
     opacity: 0.8;
     color: white;
     font-family: 'Roboto';
@@ -55,7 +55,7 @@ input {
     margin: 20px;
 }
 
-.free {
+.icon {
     padding-top: 30px;
     font-size: 120px;
     align-self: center;
@@ -66,10 +66,8 @@ input {
     opacity: .7;
 }
 
-.busy {
-    padding-top: 30px;
-    font-size: 120px;
-    align-self: center;
+.free-room {
+    background-color: rgb(1, 84, 225);
 }
 .status {
     font-size: 50px;
@@ -82,7 +80,8 @@ input {
     font-weight: 300;
     font-size: 25px;
     text-align: center;
-    margin-top: 100px;
+    margin-left: 30px;
+    margin-right: 30px;
 }
 
 .subject {
@@ -93,8 +92,9 @@ input {
 }
 
 .meeting-room-name {
-    font-size: 30px;
-    padding: 10px;
+    font-size: 80px;
+    margin-left: 20px;
+    margin-top: 10px;
 }
 
 .meeting-room-1 {
