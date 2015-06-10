@@ -57,7 +57,7 @@ input {
 
 .icon {
     padding-top: 30px;
-    font-size: 120px;
+    font-size: 12vh;
     align-self: center;
 }
 
@@ -70,7 +70,7 @@ input {
     background-color: rgb(1, 84, 225);
 }
 .status {
-    font-size: 50px;
+    font-size: 5vh;
     align-self: center;
     display: flex;
     flex-direction: column-reverse;
@@ -92,9 +92,17 @@ input {
 }
 
 .meeting-room-name {
-    font-size: 80px;
+    font-size: 8vh;
     margin-left: 20px;
     margin-top: 10px;
+    position: absolute;
+}
+
+.meeting-room-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
 }
 
 .meeting-room-1 {
