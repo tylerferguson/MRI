@@ -76,6 +76,10 @@ input {
     flex-direction: column-reverse;
 }
 
+.status-message {
+    align-self: center;
+}
+
 .error-message {
     font-weight: 300;
     font-size: 25px;
