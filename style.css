@@ -39,6 +39,7 @@ input {
     width: 50%;
     height: auto;
     opacity: 0.3;
+    margin-top: 20px;
 }
 
 .room {
