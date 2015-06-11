@@ -9,8 +9,15 @@
         var loadedFromLocalStorage = localStorage.length > 0;
         var firstErrorTime;
 
+        var roomEmailKeys = ['room1Email', 'room2Email', 'room3Email', 'room4Email'];
+
         $scope.emailAddressesSubmitted = function() {
-            return localStorage.length > 0;
+            for (var key in roomEmailKeys) {
+                if (localStorage.hasOwnProperty(roomEmailKeys[key])) {
+                    return true;
+                }
+            }
+            return false;
         };
 
         $scope.meetingRooms = [
