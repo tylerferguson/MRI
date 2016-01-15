@@ -12,18 +12,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.js"></script>
     <script src="app.module.js"></script>
+    <script src="email.config.js"></script>
     <script src="room.controller.js"></script>
 </head>
 <body ng-controller="RoomCtrl">
-    <div class="log-in" ng-if="!emailAddressesSubmitted()">
-        <p>Enter the Email addresses of the rooms below and press enter:</p>
-        <form ng-submit="submitEmailAddresses()">
-            <input type="text" ng-repeat="room in meetingRooms" ng-model="room.email">
-            <input ng-hide="true" type="submit" value="Submit"/>
-        </form>
-    </div>
-
-    <div ng-if="emailAddressesSubmitted()" class="meeting-rooms">
+    <div class="meeting-rooms">
         <div class="center-display">
             <span id="time-display">
                 {{timeNow}}

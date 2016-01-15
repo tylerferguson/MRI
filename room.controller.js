@@ -3,26 +3,14 @@
  */
 (function() {
 
-    angular.module('MeetingRoomInterface').controller('RoomCtrl', ['$scope', '$http', function($scope, $http) {
+    angular.module('MeetingRoomInterface').controller('RoomCtrl', ['$scope', '$http', 'emailAddresses', function($scope, $http, emailAddresses) {
 
         var self = this;
-        var loadedFromLocalStorage = localStorage.length > 0;
         var firstErrorTime;
-
-        var roomEmailKeys = ['room1Email', 'room2Email', 'room3Email', 'room4Email'];
-
-        $scope.emailAddressesSubmitted = function() {
-            for (var key in roomEmailKeys) {
-                if (localStorage.hasOwnProperty(roomEmailKeys[key])) {
-                    return true;
-                }
-            }
-            return false;
-        };
 
         $scope.meetingRooms = [
             {
-                email: null,
+                email: emailAddresses.room1,
                 name: "1",
                 organizer: null,
                 status: null,
@@ -33,7 +21,7 @@
                 booked: false
             },
             {
-                email: null,
+                email: emailAddresses.room2,
                 name: "2",
                 organizer: null,
                 status: null,
@@ -44,7 +32,7 @@
                 booked: false
             },
             {
-                email: null,
+                email: emailAddresses.room3,
                 name: "3",
                 organizer: null,
                 status: null,
@@ -55,7 +43,7 @@
                 booked: false
             },
             {
-                email: null,
+                email: emailAddresses.room4,
                 name: "4",
                 organizer: null,
                 status: null,
@@ -66,14 +54,6 @@
                 booked: false
             }
         ];
-
-        $scope.submitEmailAddresses = function(){
-            $scope.meetingRooms.forEach(function(room, index) {
-                if (room.email !== null) {
-                    localStorage["room" + (index + 1) + "Email"] = room.email;
-                }
-            });
-        };
 
         $scope.setStatusClass = function(status, index) {
             var className = '';
@@ -86,17 +66,7 @@
             return className + 'meeting-room-' + (index + 1);
         };
 
-        $scope.$watch('emailAddressesSubmitted()', function(value) {
-            if (!value) {
-                return;
-            }
-            if (loadedFromLocalStorage) {
-                $scope.meetingRooms.forEach(function(room, index) {
-                    room.email = localStorage["room" + (index + 1) + "Email"];
-                });
-            }
-            loadApp();
-        });
+        loadApp();
 
         function loadApp() {
             getTimeNow();
